@@ -1,4 +1,4 @@
-package com.bank.photofinder.ui.home.adapter
+package com.bank.photofinder.ui.home.search.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

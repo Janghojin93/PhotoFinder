@@ -36,12 +36,14 @@
                 android:id="@+id/photoListRecylerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clipToPadding="false"
                 android:paddingTop="@dimen/base_top"
                 android:paddingBottom="@dimen/base_bottom"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:listitem="@layout/list_item_search_photo" />
+                tools:listitem="@layout/list_item_search_photo"
+                android:clipToPadding="false"
+                android:paddingStart="@dimen/base_start"
+                android:paddingEnd="@dimen/base_end"
+                />
 
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -136,7 +136,10 @@ class CustomSearchView : AppCompatEditText, TextWatcher, View.OnTouchListener,
 
     }
 
-    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+    }
+
 
 
     //키 입력 이벤트 처리

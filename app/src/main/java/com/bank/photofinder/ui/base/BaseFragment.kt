@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.bank.photofinder.ui.customview.CustomSearchView
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -24,8 +25,8 @@ abstract class BaseFragment<VB: ViewDataBinding>(private val layoutId: Int) : Fr
     }
 
 
-    //EditText 지연 함수
-    fun EditText.afterTextChangedCustom(delay: Long, search: (String) -> Unit) {
+    //검색 지연 메서드
+    fun CustomSearchView.afterTextChangedCustom(delay: Long, search: (String) -> Unit) {
         var job: Job? = null
         this.addTextChangedListener {
             it ?: return@addTextChangedListener
