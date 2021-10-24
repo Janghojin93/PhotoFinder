@@ -11,6 +11,7 @@
     <color name="base">#FFEC3C</color>
     <color name="base_dark">#252525</color>
     <color name="base_gray">#494744</color>
+    <color name="base_gray_row">#A6A6A5</color>
     <color name="base_white">#BCBCBC</color>
 
     <color name="colorStatusConnected">#03A9F4</color>

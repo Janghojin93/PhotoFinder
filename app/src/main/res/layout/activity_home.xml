@@ -2,7 +2,6 @@
 <layout>
 
     <data>
-
         <variable
             name="home_view_model"
             type="com.bank.photofinder.ui.home.HomeViewModel" />
@@ -14,8 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.home.HomeActivity">
-
-
 
 
         <com.google.android.material.appbar.AppBarLayout
@@ -54,8 +51,7 @@
             android:orientation="horizontal"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appbar"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/appbar" />
 
 
         <LinearLayout
@@ -64,11 +60,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorStatusNotConnected"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:visibility="gone"
-            >
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:id="@+id/textViewNetworkStatus"

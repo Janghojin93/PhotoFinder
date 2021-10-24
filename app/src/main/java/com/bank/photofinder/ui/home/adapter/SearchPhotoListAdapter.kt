@@ -9,7 +9,9 @@ import com.bank.photofinder.databinding.ListItemSearchPhotoBinding
 import com.bank.photofinder.model.Photo
 
 
-class SearchPhotoListAdapter : PagingDataAdapter<Photo, SearchPhotoListAdapter.ViewHolder>(DataDiff) {
+class SearchPhotoListAdapter :
+    PagingDataAdapter<Photo, SearchPhotoListAdapter.ViewHolder>(DataDiff) {
+
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val photo = getItem(position) as Photo

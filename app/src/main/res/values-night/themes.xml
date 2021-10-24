@@ -25,4 +25,22 @@
         <item name="android:layout_gravity">center</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
+
+    <style name="StatysEditText">
+        <item name="startIconDrawable">@drawable/ic_search</item>
+        <item name="hintTextColor">@color/base_dark</item>
+        <item name="boxBackgroundColor">@color/white</item>
+        <item name="android:hint">@string/search_hint</item>
+    </style>
+
+    <style name="StatusEditText">
+        <item name="hintTextColor">@color/base_white</item>
+        <item name="boxBackgroundColor">@color/black</item>
+        <item name="android:hint">@string/search_hint</item>
+        <item name="android:textColor">@color/base_dark</item>
+        <item name="android:textSize">@dimen/base_text</item>
+
+    </style>
+
+
 </resources>

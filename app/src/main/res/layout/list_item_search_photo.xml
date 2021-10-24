@@ -18,7 +18,7 @@
 
         <ImageView
             android:id="@+id/photoImageView"
-            thumbnail="@{photo_model.thumbnail_url}"
+            imageUrl="@{photo_model.thumbnail_url}"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginLeft="16dp"

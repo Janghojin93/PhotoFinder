@@ -9,13 +9,12 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 
-object ViewBinding {
+object CommonBindingAdapter {
 
-    @JvmStatic
-    @BindingAdapter("thumbnail")
-    fun loadBookImage(view: ImageView, imageUrl: String) {
-        Glide.with(view.context)
-            .load(Uri.parse(imageUrl))
+    @BindingAdapter("imageUrl")
+    fun setImageUrl(view: ImageView, url: String) {
+        Glide.with(view)
+            .load(url)
             .transition(DrawableTransitionOptions.withCrossFade(250))
             .apply(
                 RequestOptions()

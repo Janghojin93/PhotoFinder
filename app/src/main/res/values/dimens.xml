@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="base_toolbar">65dp</dimen>
+    <dimen name="base_start">10dp</dimen>
+    <dimen name="base_end">10dp</dimen>
+    <dimen name="base_top">10dp</dimen>
+    <dimen name="base_bottom">10dp</dimen>
+    <dimen name="base_text">15dp</dimen>
+
+</resources>
