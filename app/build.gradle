@@ -12,13 +12,13 @@ def credentialsProperty = new Properties()
 credentialsProperty.load(new FileInputStream(credentialsFile))
 
 android {
-    compileSdkVersion 31
-    buildToolsVersion "31.0.0"
+    compileSdkVersion androidCompileSdkVersion
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.bank.photofinder"
-        minSdkVersion 24
-        targetSdkVersion 31
+        minSdkVersion androidMinSdkVersion
+        targetSdkVersion androidTargetSdkVersion
         versionCode 1
         versionName "1.0"
 
