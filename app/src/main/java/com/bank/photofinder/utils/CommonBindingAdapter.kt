@@ -15,8 +15,6 @@ object CommonBindingAdapter {
     @JvmStatic
     @BindingAdapter("imageUrl")
     fun setImageUrl(view: ImageView, imageUrl: String) {
-
-
         Glide.with(view.context)
             .load(Uri.parse(imageUrl))
             .transition(DrawableTransitionOptions.withCrossFade(250))
@@ -29,6 +27,5 @@ object CommonBindingAdapter {
 
             )
             .into(view)
-
     }
 }

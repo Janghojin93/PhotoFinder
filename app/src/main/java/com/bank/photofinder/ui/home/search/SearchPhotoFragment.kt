@@ -36,11 +36,11 @@ class SearchPhotoFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initView()
+        setupView()
         setupObserver()
     }
 
-    private fun initView() {
+    private fun setupView() {
         setupRecyclerView()
         mViewBinding.apply {
             searchCustomEditView.apply {
@@ -94,9 +94,5 @@ class SearchPhotoFragment :
         mSearchPhotoViewModel.photo.observe(viewLifecycleOwner) {
             adapter.submitData(viewLifecycleOwner.lifecycle, it)
         }
-
-
     }
-
-
 }

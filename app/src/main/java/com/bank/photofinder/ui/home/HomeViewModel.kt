@@ -1,5 +1,6 @@
 package com.bank.photofinder.ui.home
 
+import android.util.Log
 import androidx.hilt.Assisted
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -26,7 +27,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun searchPhoto(query: String) {
-        currentQuery.value = query
+        if (currentQuery.value != query) currentQuery.value = query
     }
 
     companion object {

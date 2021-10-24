@@ -35,12 +35,12 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>() {
         super.onCreate(savedInstanceState)
         setContentView(mViewBinding.root)
 
-        initView()
+        setupView()
         handleNetworkChanges()
 
     }
 
-    private fun initView() {
+    private fun setupView() {
         mViewBinding.apply {
             homeViewModel = mViewModel
             lifecycleOwner = this@HomeActivity

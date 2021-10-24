@@ -90,4 +90,5 @@ class PhotoPagingSource(private val apiServices: ApiServices, private val query:
     }
 
     override fun getRefreshKey(state: PagingState<Int, Photo>): Int? = null
+
 }
