@@ -13,7 +13,7 @@
     <color name="base_gray">#494744</color>
     <color name="base_white">#BCBCBC</color>
 
-    <color name="colorStatusConnected">#43A047</color>
-    <color name="colorStatusNotConnected">#D32F2F</color>
+    <color name="colorStatusConnected">#03A9F4</color>
+    <color name="colorStatusNotConnected">#FF5722</color>
 
 </resources>

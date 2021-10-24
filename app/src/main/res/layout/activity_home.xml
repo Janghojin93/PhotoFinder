@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
+
         <variable
             name="home_view_model"
             type="com.bank.photofinder.ui.home.HomeViewModel" />
@@ -14,26 +16,6 @@
         tools:context=".ui.home.HomeActivity">
 
 
-        <LinearLayout
-            android:id="@+id/networkStatusLayout"
-            style="@style/StatusView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorStatusNotConnected"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:visibility="gone"
-            >
-
-            <TextView
-                android:id="@+id/textViewNetworkStatus"
-                style="@style/StatusTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="@string/no_text_connectivity" />
-
-        </LinearLayout>
 
 
         <com.google.android.material.appbar.AppBarLayout
@@ -72,7 +54,30 @@
             android:orientation="horizontal"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appbar" />
+            app:layout_constraintTop_toBottomOf="@+id/appbar"
+            />
+
+
+        <LinearLayout
+            android:id="@+id/networkStatusLayout"
+            style="@style/StatusView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorStatusNotConnected"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone"
+            >
+
+            <TextView
+                android:id="@+id/textViewNetworkStatus"
+                style="@style/StatusTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@string/no_text_connectivity" />
+
+        </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
