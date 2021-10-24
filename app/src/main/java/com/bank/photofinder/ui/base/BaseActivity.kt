@@ -14,6 +14,8 @@ abstract class BaseActivity<VM : ViewModel, VB : ViewBinding>  : AppCompatActivi
 
     protected abstract fun getViewBinding(): VB
 
+    protected var mNetworkCheck = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mViewBinding = getViewBinding()
