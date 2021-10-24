@@ -27,6 +27,10 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>() {
     override fun getViewBinding(): ActivityHomeBinding = ActivityHomeBinding.inflate(layoutInflater)
     private val tabLayoutTextArray = arrayOf("검색", "보관함")
 
+    private val pagerAdapter: ScreenSlidePagerAdapter by lazy {
+        ScreenSlidePagerAdapter(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(mViewBinding.root)
@@ -40,11 +44,9 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>() {
         mViewBinding.apply {
             homeViewModel = mViewModel
             lifecycleOwner = this@HomeActivity
+            pager.adapter = pagerAdapter
+            pager.isUserInputEnabled = false
         }
-
-        var pagerAdapter = ScreenSlidePagerAdapter(this)
-        mViewBinding.pager.adapter = pagerAdapter
-        mViewBinding.pager.isUserInputEnabled = false
 
 
         TabLayoutMediator(mViewBinding.tabs, mViewBinding.pager) { tab, position ->
@@ -54,16 +56,6 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>() {
 
     }
 
-
-    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
-        override fun getItemCount(): Int = 2
-        override fun createFragment(position: Int): Fragment {
-            return when (position) {
-                0 -> SearchPhotoFragment.newInstance()
-                else -> SavePhotoListFragment.newInstance()
-            }
-        }
-    }
 
     private fun handleNetworkChanges() {
         NetworkUtils.getNetworkLiveData(applicationContext).observe(this) { isConnected ->
@@ -91,6 +83,17 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>() {
                     }
                     mNetworkCheck = true
                 }
+            }
+        }
+    }
+
+
+    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
+        override fun getItemCount(): Int = 2
+        override fun createFragment(position: Int): Fragment {
+            return when (position) {
+                0 -> SearchPhotoFragment.newInstance()
+                else -> SavePhotoListFragment.newInstance()
             }
         }
     }
