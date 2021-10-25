@@ -7,10 +7,10 @@ import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 
 
-fun Activity.showToast(message: String, duration: Int = Toast.LENGTH_SHORT) {
-    Toast.makeText(applicationContext, message, duration).show()
-}
-
-
-fun Activity.getColorRes(@ColorRes id: Int) = ContextCompat.getColor(applicationContext, id)
-
+//fun Activity.showToast(message: String, duration: Int = Toast.LENGTH_SHORT) {
+//    Toast.makeText(applicationContext, message, duration).show()
+//}
+//
+//
+//fun Activity.getColorRes(@ColorRes id: Int) = ContextCompat.getColor(applicationContext, id)
+//

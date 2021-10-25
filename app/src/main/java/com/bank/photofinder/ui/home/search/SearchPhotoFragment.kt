@@ -21,6 +21,7 @@ import com.bank.photofinder.ui.home.search.adapter.SearchPhotoListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class SearchPhotoFragment :
     BaseFragment<FragmentSearchPhotoBinding>(R.layout.fragment_search_photo),
@@ -60,6 +61,7 @@ class SearchPhotoFragment :
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun setupRecyclerView() {
         mViewBinding.apply {
             photoListRecyclerView.layoutManager = GridLayoutManager(activity, 3)
@@ -114,8 +116,36 @@ class SearchPhotoFragment :
 
     //좋아요 버튼 클릭 이벤트 처리
     override fun onItemSaveClick(photo: Photo) {
-        Log.d(TAG, "선택::" + photo.thumbnail_url)
-        mSearchPhotoViewModel.onClickSaveImage(photo)
-        Toast.makeText(activity, R.string.save_success, Toast.LENGTH_SHORT).show();
+        mSearchPhotoViewModel.run {
+            if (savePhotoList.value.isNullOrEmpty()) {
+                onClickSaveImage(photo)
+                Toast.makeText(activity, R.string.save_success, Toast.LENGTH_SHORT).show();
+            } else {
+
+                if (containCheck(photo, savePhotoList.value!!)) {
+                    Toast.makeText(activity, R.string.save_fail, Toast.LENGTH_SHORT).show();
+                } else {
+                    onClickSaveImage(photo)
+                    Toast.makeText(activity, R.string.save_success, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
+    //이미 저장된 이미지인지 아닌지 체크
+    private fun containCheck(photo: Photo, photoList: List<Photo>): Boolean {
+        var isContain = true
+
+        for (i in photoList.indices) {
+            if (photoList[i].thumbnail_url == photo.thumbnail_url) {
+                Toast.makeText(activity, R.string.save_fail, Toast.LENGTH_SHORT).show();
+                break
+            }
+            if (i == photoList.size - 1) {
+                isContain = false
+                Toast.makeText(activity, R.string.save_success, Toast.LENGTH_SHORT).show();
+            }
+        }
+        return isContain
     }
 }
