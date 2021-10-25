@@ -3,7 +3,9 @@ package com.bank.photofinder.ui.home.search
 import SEARCH_DELAY
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.paging.LoadState
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bank.photofinder.R
 import com.bank.photofinder.databinding.FragmentSearchPhotoBinding
 import com.bank.photofinder.extensions.hideKeyboard
+import com.bank.photofinder.model.Photo
 import com.bank.photofinder.ui.base.BaseFragment
 import com.bank.photofinder.ui.home.HomeViewModel
 import com.bank.photofinder.ui.home.search.adapter.SearchPhotoListAdapter
@@ -20,14 +23,15 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @AndroidEntryPoint
 class SearchPhotoFragment :
-    BaseFragment<FragmentSearchPhotoBinding>(R.layout.fragment_search_photo) {
+    BaseFragment<FragmentSearchPhotoBinding>(R.layout.fragment_search_photo),
+    SearchPhotoListAdapter.OnItemClickListener {
 
     private val TAG = "SearchPhotoFragment.kt"
     private var queryCheck = ""
 
     private val mSearchPhotoViewModel: HomeViewModel by activityViewModels()
     private val adapter by lazy {
-        SearchPhotoListAdapter()
+        SearchPhotoListAdapter(this)
     }
 
     companion object {
@@ -109,5 +113,11 @@ class SearchPhotoFragment :
             }
         }
 
+    }
+
+    //좋아요 버튼 클릭 이벤트 처리
+    override fun onItemSaveClick(photo: Photo) {
+        Log.d(TAG, "선택::" + photo.thumbnail_url)
+        Toast.makeText(activity, R.string.save_success, Toast.LENGTH_SHORT).show();
     }
 }

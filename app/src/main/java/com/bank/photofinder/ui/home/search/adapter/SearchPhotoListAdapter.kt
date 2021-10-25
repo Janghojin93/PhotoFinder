@@ -7,9 +7,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bank.photofinder.databinding.ListItemSearchPhotoBinding
 import com.bank.photofinder.model.Photo
+import com.bank.photofinder.utils.onThrottleClick
 
 
-class SearchPhotoListAdapter :
+class SearchPhotoListAdapter(private val listener: OnItemClickListener) :
     PagingDataAdapter<Photo, SearchPhotoListAdapter.ViewHolder>(DataDiff) {
 
 
@@ -31,9 +32,23 @@ class SearchPhotoListAdapter :
         )
     }
 
-    class ViewHolder(val binding: ListItemSearchPhotoBinding) :
+    inner class ViewHolder(val binding: ListItemSearchPhotoBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        init {
+            binding.imageSaveButton.onThrottleClick {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    getItem(position)?.let { item -> listener.onItemSaveClick(item) }
+                }
+            }
+        }
+
+    }
+
+
+    interface OnItemClickListener {
+        fun onItemSaveClick(photo: Photo)
     }
 
     object DataDiff : DiffUtil.ItemCallback<Photo>() {

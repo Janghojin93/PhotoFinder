@@ -23,16 +23,21 @@ class HomeViewModel @Inject constructor(
 
     val photo = currentQuery.switchMap { queryString ->
         photoRepository.getSearchResults(queryString).cachedIn(viewModelScope)
-
     }
 
     fun searchPhoto(query: String) {
-       currentQuery.value = query
+        currentQuery.value = query
     }
 
     companion object {
         private const val CURRENT_QUERY = "current_query"
         private const val DEFAULT_QUERY = "home"
+    }
+
+
+    // 이미지 저장 클릭 이벤트
+    private fun onClickSaveImage() {
+
     }
 
 }

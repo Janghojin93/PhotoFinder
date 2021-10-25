@@ -70,7 +70,6 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>() {
                     mNetworkCheck = false
                     show()
                     setBackgroundColor(getColorRes(R.color.colorStatusNotConnected))
-                    animate().alpha(1f)
                 }
             } else {
                 if (!mNetworkCheck) {
@@ -78,7 +77,7 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>() {
                     mViewBinding.networkStatusLayout.apply {
                         setBackgroundColor(getColorRes(R.color.colorStatusConnected))
                         animate()
-                            .alpha(0.1f)
+                            .alpha(1f)
                             .setStartDelay(ANIMATION_DURATION)
                             .setDuration(ANIMATION_DURATION)
                             .setListener(object : AnimatorListenerAdapter() {

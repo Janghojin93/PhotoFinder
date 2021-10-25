@@ -25,7 +25,7 @@ abstract class BaseFragment<VB: ViewDataBinding>(private val layoutId: Int) : Fr
     }
 
 
-    //검색 지연 메서드
+    //검색 지연
     fun CustomSearchView.afterTextChangedCustom(delay: Long, search: (String) -> Unit) {
         var job: Job? = null
         this.addTextChangedListener {
