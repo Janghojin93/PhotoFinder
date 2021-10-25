@@ -16,6 +16,9 @@ import com.bank.photofinder.model.Photo
 import com.bank.photofinder.ui.base.BaseFragment
 import com.bank.photofinder.ui.home.HomeViewModel
 import com.bank.photofinder.ui.home.search.adapter.SearchPhotoListAdapter
+import com.bank.photofinder.utils.hide
+import com.bank.photofinder.utils.show
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -65,9 +68,7 @@ class SearchPhotoFragment :
             photoListRecyclerView.layoutManager = GridLayoutManager(activity, 3)
             // StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
             photoListRecyclerView.setHasFixedSize(true)
-            photoListRecyclerView.itemAnimator = null
             photoListRecyclerView.adapter = adapter
-
             photoListRecyclerView.apply {
                 setOnTouchListener { _, _ ->
                     mViewBinding.searchCustomEditView.hideKeyboard()
@@ -79,27 +80,23 @@ class SearchPhotoFragment :
 
         adapter.addLoadStateListener { loadState ->
             mViewBinding.apply {
+
                 photoProgressBar.isVisible = loadState.source.refresh is LoadState.Loading
-
                 photoListRecyclerView.isVisible = loadState.source.refresh is LoadState.NotLoading
-
                 errorTextview.isVisible = loadState.source.refresh is LoadState.Error
 
                 //데이터가 없을때
                 if (loadState.source.refresh is LoadState.NotLoading && loadState.append.endOfPaginationReached && adapter.itemCount < 1) {
-                    photoListRecyclerView.isVisible = false
-                    emptyTextview.isVisible = true
+                    photoListRecyclerView.hide()
+                    emptyTextview.show()
                 } else {
-                    emptyTextview.isVisible = false
+                    emptyTextview.hide()
                 }
             }
         }
-
-
     }
 
     private fun setupObserver() {
-
         mSearchPhotoViewModel.apply {
             photo.observe(viewLifecycleOwner) {
                 adapter.submitData(viewLifecycleOwner.lifecycle, it)
@@ -109,7 +106,6 @@ class SearchPhotoFragment :
                 queryCheck = it
             }
         }
-
     }
 
 
@@ -117,14 +113,26 @@ class SearchPhotoFragment :
     override fun onItemSaveClick(photo: Photo) {
         mSearchPhotoViewModel.run {
             if (savePhotoList.value.isNullOrEmpty()) {
-                onClickSaveImage(photo)
-                Toast.makeText(activity, R.string.save_success, Toast.LENGTH_SHORT).show();
+                onClickSavePhoto(photo)
+                Snackbar.make(
+                    mViewBinding.contentsLayout,
+                    R.string.save_success,
+                    Snackbar.LENGTH_SHORT
+                ).show()
             } else {
                 if (containsCheck(photo, savePhotoList.value!!)) {
-                    Toast.makeText(activity, R.string.save_fail, Toast.LENGTH_SHORT).show();
+                    Snackbar.make(
+                        mViewBinding.contentsLayout,
+                        R.string.save_fail,
+                        Snackbar.LENGTH_SHORT
+                    ).show()
                 } else {
-                    onClickSaveImage(photo)
-                    Toast.makeText(activity, R.string.save_success, Toast.LENGTH_SHORT).show();
+                    onClickSavePhoto(photo)
+                    Snackbar.make(
+                        mViewBinding.contentsLayout,
+                        R.string.save_success,
+                        Snackbar.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -132,18 +140,15 @@ class SearchPhotoFragment :
 
     //이미 저장된 이미지인지 아닌지 체크
     private fun containsCheck(photo: Photo, photoList: List<Photo>): Boolean {
-        var isContains = true
+        var isContains = false
 
         for (i in photoList.indices) {
             if (photoList[i].thumbnail_url == photo.thumbnail_url) {
-                Toast.makeText(activity, R.string.save_fail, Toast.LENGTH_SHORT).show();
+                isContains = true
                 break
             }
-            if (i == photoList.size - 1) {
-                isContains = false
-                Toast.makeText(activity, R.string.save_success, Toast.LENGTH_SHORT).show();
-            }
         }
+
         return isContains
     }
 }

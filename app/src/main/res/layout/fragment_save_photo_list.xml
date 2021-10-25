@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -16,7 +16,39 @@
             android:paddingTop="@dimen/base_top"
             android:paddingEnd="@dimen/base_end"
             android:paddingBottom="@dimen/base_bottom"
+            android:visibility="gone"
             tools:listitem="@layout/list_item_save_photo" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/emptyLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ImageView
+                android:id="@+id/emptyImageView"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/img_empty"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/emptyTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/empty_photo_text"
+                android:textColor="#707070"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/emptyImageView" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </FrameLayout>

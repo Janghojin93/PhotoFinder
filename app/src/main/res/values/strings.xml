@@ -14,6 +14,13 @@
     <string name="back_check">뒤로가기 버튼을 한번 더 누르면 종료됩니다</string>
     <string name="save_success">저장완료</string>
     <string name="save_fail">이미 저장된 이미지입니다</string>
+    <string name="empty_photo_text">저장된 이미지가 없습니다</string>
+    <string name="delete_photo_title">이미지 삭제</string>
+    <string name="delete_photo_text">해당이미지를 보관함에서 삭제하시겠습니까?</string>
+    <string name="delete">삭제</string>
+    <string name="delete_photo_success">삭제완료</string>
+    <string name="cancel">취소</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

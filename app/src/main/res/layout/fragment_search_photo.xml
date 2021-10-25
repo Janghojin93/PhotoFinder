@@ -9,6 +9,7 @@
         tools:context=".ui.home.save.SavePhotoListFragment">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/contentsLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".ui.home.save.SavePhotoListFragment">

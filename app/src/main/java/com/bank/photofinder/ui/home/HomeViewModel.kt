@@ -36,19 +36,35 @@ class HomeViewModel @Inject constructor(
     }
 
     //이미지 저장 클릭 이벤트
-    fun onClickSaveImage(photo: Photo) {
-
+    fun onClickSavePhoto(photo: Photo) {
         if (_savePhotoList.value.isNullOrEmpty()) {
-            saveImage(listOf(photo))
+            savePhoto(listOf(photo))
         } else {
             val list = _savePhotoList.value?.toMutableList()
             list?.add(0, photo)
-            list?.let { saveImage(it) }
+            list?.let { savePhoto(it) }
         }
 
     }
 
-    private fun saveImage(photoList: List<Photo>) {
+    //이미지 삭제 클릭 이벤트
+    fun onClickDeletePhoto(photo: Photo) {
+        if (!_savePhotoList.value.isNullOrEmpty()) {
+            val list = _savePhotoList.value?.toMutableList()
+            list?.removeIf {
+                it.thumbnail_url == photo.thumbnail_url
+            }
+            list?.let { deletePhoto(it) }
+        }
+    }
+
+
+    private fun deletePhoto(photoList: List<Photo>) {
+        _savePhotoList.value = photoList
+
+    }
+
+    private fun savePhoto(photoList: List<Photo>) {
         _savePhotoList.value = photoList
     }
 
