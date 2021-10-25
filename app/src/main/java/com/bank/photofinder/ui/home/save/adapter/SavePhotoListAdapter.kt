@@ -1,21 +1,22 @@
-package com.bank.photofinder.ui.home.search.adapter
+package com.bank.photofinder.ui.home.save.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bank.photofinder.databinding.ListItemSearchPhotoBinding
+import com.bank.photofinder.databinding.ListItemSavePhotoBinding
 import com.bank.photofinder.model.Photo
 import com.bank.photofinder.utils.onThrottleClick
 
 
-class SearchPhotoListAdapter(private val listener: OnItemClickListener) :
-    PagingDataAdapter<Photo, SearchPhotoListAdapter.ViewHolder>(DataDiff) {
+class SavePhotoListAdapter(private val listener: SavePhotoListAdapter.OnItemClickListener) :
+    ListAdapter<Photo, SavePhotoListAdapter.ViewHolder>(DataDiff) {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            ListItemSearchPhotoBinding.inflate(
+            ListItemSavePhotoBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent, false
             )
@@ -28,27 +29,23 @@ class SearchPhotoListAdapter(private val listener: OnItemClickListener) :
             photoModel = photo
             executePendingBindings()
         }
-
     }
 
-
-    inner class ViewHolder(val binding: ListItemSearchPhotoBinding) :
+    inner class ViewHolder(val binding: ListItemSavePhotoBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
         init {
-            binding.imageSaveButton.onThrottleClick {
+            binding.imageRemoveButton.onThrottleClick {
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    getItem(position)?.let { item -> listener.onItemSaveClick(item) }
+                    getItem(position)?.let { item -> listener.onItemRemoveClick(item) }
                 }
             }
         }
-
     }
 
 
     interface OnItemClickListener {
-        fun onItemSaveClick(photo: Photo)
+        fun onItemRemoveClick(photo: Photo)
     }
 
     object DataDiff : DiffUtil.ItemCallback<Photo>() {
@@ -60,4 +57,5 @@ class SearchPhotoListAdapter(private val listener: OnItemClickListener) :
             return oldItem == newItem
         }
     }
+
 }
