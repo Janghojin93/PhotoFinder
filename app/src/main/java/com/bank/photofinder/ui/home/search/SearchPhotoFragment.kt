@@ -7,6 +7,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bank.photofinder.R
 import com.bank.photofinder.databinding.FragmentSearchPhotoBinding
@@ -14,9 +15,8 @@ import com.bank.photofinder.extensions.hideKeyboard
 import com.bank.photofinder.ui.base.BaseFragment
 import com.bank.photofinder.ui.home.HomeViewModel
 import com.bank.photofinder.ui.home.search.adapter.SearchPhotoListAdapter
-import com.bank.photofinder.utils.hide
-import com.bank.photofinder.utils.show
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @AndroidEntryPoint
 class SearchPhotoFragment :
@@ -42,6 +42,7 @@ class SearchPhotoFragment :
         setupObserver()
     }
 
+    @ExperimentalCoroutinesApi
     private fun setupView() {
         setupRecyclerView()
         mViewBinding.apply {
@@ -59,8 +60,8 @@ class SearchPhotoFragment :
     @SuppressLint("ClickableViewAccessibility")
     private fun setupRecyclerView() {
         mViewBinding.apply {
-            photoListRecylerView.layoutManager =
-                StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
+            photoListRecylerView.layoutManager = GridLayoutManager(activity, 3)
+            // StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
             photoListRecylerView.setHasFixedSize(true)
             photoListRecylerView.itemAnimator = null
             photoListRecylerView.adapter = adapter
@@ -84,10 +85,10 @@ class SearchPhotoFragment :
 
                 //데이터가 없을때
                 if (loadState.source.refresh is LoadState.NotLoading && loadState.append.endOfPaginationReached && adapter.itemCount < 1) {
-                    photoListRecylerView.hide()
-                    emptyTextview.show()
+                    photoListRecylerView.isVisible = false
+                    emptyTextview.isVisible = true
                 } else {
-                    emptyTextview.hide()
+                    emptyTextview.isVisible = false
                 }
             }
         }
@@ -95,6 +96,7 @@ class SearchPhotoFragment :
 
     }
 
+    @ExperimentalCoroutinesApi
     private fun setupObserver() {
 
         mSearchPhotoViewModel.apply {

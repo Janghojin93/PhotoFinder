@@ -17,6 +17,7 @@ import com.bank.photofinder.utils.NetworkUtils
 import com.bank.photofinder.utils.getColorRes
 import com.bank.photofinder.utils.hide
 import com.bank.photofinder.utils.show
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,6 +27,9 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>() {
     override val mViewModel: HomeViewModel by viewModels()
     override fun getViewBinding(): ActivityHomeBinding = ActivityHomeBinding.inflate(layoutInflater)
     private val tabLayoutTextArray = arrayOf("검색", "보관함")
+
+    //뒤로 가기 연속 클릭 대기 시간
+    private var backWait: Long = 0
 
     private val pagerAdapter: ScreenSlidePagerAdapter by lazy {
         ScreenSlidePagerAdapter(this)
@@ -99,4 +103,20 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>() {
         }
     }
 
+    override fun onBackPressed() {
+        if (mViewBinding.pager.currentItem == 0) {
+            if (System.currentTimeMillis() - backWait >= 2000) {
+                backWait = System.currentTimeMillis()
+                Snackbar.make(
+                    mViewBinding.contentsLayout,
+                    R.string.back_check,
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            } else {
+                super.onBackPressed()
+            }
+        } else {
+            mViewBinding.pager.currentItem = mViewBinding.pager.currentItem - 1
+        }
+    }
 }

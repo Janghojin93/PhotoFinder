@@ -11,6 +11,7 @@
     <string name="no_text_connectivity">No Connection</string>
     <string name="text_connectivity">Connection success</string>
     <string name="http_exception">데이터를 불러오는데 문제가 발생했습니다.</string>
+    <string name="back_check">뒤로가기 버튼을 한번 더 누르면 종료됩니다."</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
