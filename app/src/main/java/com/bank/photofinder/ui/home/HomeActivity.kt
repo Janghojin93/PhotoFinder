@@ -61,7 +61,7 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>() {
 
     }
 
-
+     //네트워크 체크
     private fun handleNetworkChanges() {
         NetworkUtils.getNetworkLiveData(applicationContext).observe(this) { isConnected ->
             if (!isConnected) {

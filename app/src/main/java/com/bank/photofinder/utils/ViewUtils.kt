@@ -2,7 +2,6 @@ package com.bank.photofinder.utils
 
 import android.app.Activity
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 

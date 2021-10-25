@@ -9,5 +9,4 @@ import javax.inject.Inject
 @HiltViewModel
 class SplashViewModel @Inject constructor(private val photoRepository: PhotoRepository) :
     ViewModel() {
-
 }

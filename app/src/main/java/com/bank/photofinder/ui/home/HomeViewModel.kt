@@ -1,12 +1,10 @@
 package com.bank.photofinder.ui.home
 
-import android.util.Log
 import androidx.hilt.Assisted
 import androidx.lifecycle.*
 import androidx.paging.cachedIn
 import com.bank.photofinder.data.repository.PhotoRepository
 import com.bank.photofinder.model.Photo
-import com.bank.photofinder.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
