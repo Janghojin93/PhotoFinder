@@ -1,9 +1,12 @@
 package com.bank.photofinder.ui.home
 
+import android.util.Log
 import androidx.hilt.Assisted
 import androidx.lifecycle.*
 import androidx.paging.cachedIn
 import com.bank.photofinder.data.repository.PhotoRepository
+import com.bank.photofinder.model.Photo
+import com.bank.photofinder.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
@@ -18,15 +21,35 @@ class HomeViewModel @Inject constructor(
 
     private val TAG = "HomeViewModel.kt"
 
-    private val currentQuery = state.getLiveData(CURRENT_QUERY, DEFAULT_QUERY)
-    val checkQuery: LiveData<String> get() = currentQuery
+    private val _currentQuery = state.getLiveData(CURRENT_QUERY, DEFAULT_QUERY)
+    private val _savePhotoList = MutableLiveData<List<Photo>>()
 
-    val photo = currentQuery.switchMap { queryString ->
+    val currentQuery: LiveData<String> get() = _currentQuery
+    val savePhotoList: LiveData<List<Photo>> get() = _savePhotoList
+
+    val photo = _currentQuery.switchMap { queryString ->
         photoRepository.getSearchResults(queryString).cachedIn(viewModelScope)
     }
 
     fun searchPhoto(query: String) {
-        currentQuery.value = query
+        _currentQuery.value = query
+    }
+
+    //이미지 저장 클릭 이벤트
+    fun onClickSaveImage(photo: Photo) {
+
+        if (_savePhotoList.value.isNullOrEmpty()) {
+            saveImage(listOf(photo))
+        } else {
+            val list = _savePhotoList.value?.toMutableList()
+            list?.add(0, photo)
+            list?.let { saveImage(it) }
+        }
+
+    }
+
+    private fun saveImage(photoList: List<Photo>) {
+        _savePhotoList.value = photoList
     }
 
     companion object {
@@ -34,10 +57,5 @@ class HomeViewModel @Inject constructor(
         private const val DEFAULT_QUERY = "home"
     }
 
-
-    // 이미지 저장 클릭 이벤트
-    private fun onClickSaveImage() {
-
-    }
 
 }

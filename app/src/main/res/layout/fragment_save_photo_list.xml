@@ -7,12 +7,17 @@
         android:layout_height="match_parent"
         tools:context=".ui.home.save.SavePhotoListFragment">
 
-        <!-- TODO: Update blank fragment layout -->
-        <TextView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/photoSaveListRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#673AB7"
-            android:text="@string/hello_blank_fragment" />
+            android:clipToPadding="false"
+            android:paddingStart="@dimen/base_start"
+            android:paddingTop="@dimen/base_top"
+            android:paddingEnd="@dimen/base_end"
+            android:paddingBottom="@dimen/base_bottom"
+            tools:listitem="@layout/list_item_save_photo" />
+
 
     </FrameLayout>
 

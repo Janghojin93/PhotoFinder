@@ -46,7 +46,6 @@ class SearchPhotoFragment :
         setupObserver()
     }
 
-    @ExperimentalCoroutinesApi
     private fun setupView() {
         setupRecyclerView()
         mViewBinding.apply {
@@ -54,23 +53,22 @@ class SearchPhotoFragment :
                 afterTextChangedCustom(SEARCH_DELAY) { query ->
                     if (query.isNotEmpty() && queryCheck != query) {
                         mSearchPhotoViewModel.searchPhoto(query)
-                        photoListRecylerView.scrollToPosition(0)
+                        photoListRecyclerView.scrollToPosition(0)
                     }
                 }
             }
         }
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     private fun setupRecyclerView() {
         mViewBinding.apply {
-            photoListRecylerView.layoutManager = GridLayoutManager(activity, 3)
+            photoListRecyclerView.layoutManager = GridLayoutManager(activity, 3)
             // StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
-            photoListRecylerView.setHasFixedSize(true)
-            photoListRecylerView.itemAnimator = null
-            photoListRecylerView.adapter = adapter
+            photoListRecyclerView.setHasFixedSize(true)
+            photoListRecyclerView.itemAnimator = null
+            photoListRecyclerView.adapter = adapter
 
-            photoListRecylerView.apply {
+            photoListRecyclerView.apply {
                 setOnTouchListener { _, _ ->
                     mViewBinding.searchCustomEditView.hideKeyboard()
                     false
@@ -83,13 +81,13 @@ class SearchPhotoFragment :
             mViewBinding.apply {
                 photoProgressBar.isVisible = loadState.source.refresh is LoadState.Loading
 
-                photoListRecylerView.isVisible = loadState.source.refresh is LoadState.NotLoading
+                photoListRecyclerView.isVisible = loadState.source.refresh is LoadState.NotLoading
 
                 errorTextview.isVisible = loadState.source.refresh is LoadState.Error
 
                 //데이터가 없을때
                 if (loadState.source.refresh is LoadState.NotLoading && loadState.append.endOfPaginationReached && adapter.itemCount < 1) {
-                    photoListRecylerView.isVisible = false
+                    photoListRecyclerView.isVisible = false
                     emptyTextview.isVisible = true
                 } else {
                     emptyTextview.isVisible = false
@@ -100,7 +98,6 @@ class SearchPhotoFragment :
 
     }
 
-    @ExperimentalCoroutinesApi
     private fun setupObserver() {
 
         mSearchPhotoViewModel.apply {
@@ -108,7 +105,7 @@ class SearchPhotoFragment :
                 adapter.submitData(viewLifecycleOwner.lifecycle, it)
             }
 
-            checkQuery.observe(viewLifecycleOwner) {
+            currentQuery.observe(viewLifecycleOwner) {
                 queryCheck = it
             }
         }
@@ -118,6 +115,7 @@ class SearchPhotoFragment :
     //좋아요 버튼 클릭 이벤트 처리
     override fun onItemSaveClick(photo: Photo) {
         Log.d(TAG, "선택::" + photo.thumbnail_url)
+        mSearchPhotoViewModel.onClickSaveImage(photo)
         Toast.makeText(activity, R.string.save_success, Toast.LENGTH_SHORT).show();
     }
 }

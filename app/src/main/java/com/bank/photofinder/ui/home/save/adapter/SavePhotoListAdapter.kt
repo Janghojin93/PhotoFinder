@@ -10,7 +10,7 @@ import com.bank.photofinder.model.Photo
 import com.bank.photofinder.utils.onThrottleClick
 
 
-class SavePhotoListAdapter(private val listener: SavePhotoListAdapter.OnItemClickListener) :
+class SavePhotoListAdapter(private val listener: OnItemClickListener) :
     ListAdapter<Photo, SavePhotoListAdapter.ViewHolder>(DataDiff) {
 
 
