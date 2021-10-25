@@ -3,13 +3,10 @@ package com.bank.photofinder.ui.home.search
 import SEARCH_DELAY
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bank.photofinder.R
 import com.bank.photofinder.databinding.FragmentSearchPhotoBinding
@@ -17,11 +14,16 @@ import com.bank.photofinder.extensions.hideKeyboard
 import com.bank.photofinder.ui.base.BaseFragment
 import com.bank.photofinder.ui.home.HomeViewModel
 import com.bank.photofinder.ui.home.search.adapter.SearchPhotoListAdapter
+import com.bank.photofinder.utils.hide
+import com.bank.photofinder.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SearchPhotoFragment :
     BaseFragment<FragmentSearchPhotoBinding>(R.layout.fragment_search_photo) {
+
+    private val TAG = "SearchPhotoFragment.kt"
+    private var queryCheck = ""
 
     private val mSearchPhotoViewModel: HomeViewModel by activityViewModels()
     private val adapter by lazy {
@@ -45,10 +47,9 @@ class SearchPhotoFragment :
         mViewBinding.apply {
             searchCustomEditView.apply {
                 afterTextChangedCustom(SEARCH_DELAY) { query ->
-                    Log.d("asd121asd", "::" + query)
-                    if (query != "") {
-                        mViewBinding.photoListRecylerView.scrollToPosition(0)
+                    if (query.isNotEmpty() && queryCheck != query) {
                         mSearchPhotoViewModel.searchPhoto(query)
+                        photoListRecylerView.scrollToPosition(0)
                     }
                 }
             }
@@ -58,7 +59,8 @@ class SearchPhotoFragment :
     @SuppressLint("ClickableViewAccessibility")
     private fun setupRecyclerView() {
         mViewBinding.apply {
-            photoListRecylerView.layoutManager = StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL)
+            photoListRecylerView.layoutManager =
+                StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
             photoListRecylerView.setHasFixedSize(true)
             photoListRecylerView.itemAnimator = null
             photoListRecylerView.adapter = adapter
@@ -71,18 +73,21 @@ class SearchPhotoFragment :
             }
         }
 
+
         adapter.addLoadStateListener { loadState ->
-            if (loadState.refresh is LoadState.Loading) {
-                Toast.makeText(activity, "로딩중", Toast.LENGTH_LONG).show()
-            } else {
-                val error = when {
-                    loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
-                    loadState.append is LoadState.Error -> loadState.append as LoadState.Error
-                    loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
-                    else -> null
-                }
-                error?.let {
-                    Toast.makeText(activity, it.error.message, Toast.LENGTH_LONG).show()
+            mViewBinding.apply {
+                photoProgressBar.isVisible = loadState.source.refresh is LoadState.Loading
+
+                photoListRecylerView.isVisible = loadState.source.refresh is LoadState.NotLoading
+
+                errorTextview.isVisible = loadState.source.refresh is LoadState.Error
+
+                //데이터가 없을때
+                if (loadState.source.refresh is LoadState.NotLoading && loadState.append.endOfPaginationReached && adapter.itemCount < 1) {
+                    photoListRecylerView.hide()
+                    emptyTextview.show()
+                } else {
+                    emptyTextview.hide()
                 }
             }
         }
@@ -91,8 +96,16 @@ class SearchPhotoFragment :
     }
 
     private fun setupObserver() {
-        mSearchPhotoViewModel.photo.observe(viewLifecycleOwner) {
-            adapter.submitData(viewLifecycleOwner.lifecycle, it)
+
+        mSearchPhotoViewModel.apply {
+            photo.observe(viewLifecycleOwner) {
+                adapter.submitData(viewLifecycleOwner.lifecycle, it)
+            }
+
+            checkQuery.observe(viewLifecycleOwner) {
+                queryCheck = it
+            }
         }
+
     }
 }

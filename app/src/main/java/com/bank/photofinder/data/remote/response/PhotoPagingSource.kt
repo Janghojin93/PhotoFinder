@@ -1,6 +1,7 @@
 package com.bank.photofinder.data.remote.response
 
 import PAGE_SIZE
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.bank.photofinder.data.remote.ApiServices
@@ -13,14 +14,19 @@ private const val PHOTO_STARTING_PAGE_INDEX = 1
 class PhotoPagingSource(private val apiServices: ApiServices, private val query: String) :
     PagingSource<Int, Photo>() {
 
+    private val TAG = "PhotoPagingSource.kt"
+
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Photo> {
         val pageNum = params.key ?: PHOTO_STARTING_PAGE_INDEX
 
         return try {
 
-            val photoList = mutableListOf<Photo>()
+            Log.d(TAG, "pageNum:$pageNum")
 
+
+            val photoList = mutableListOf<Photo>()
             //이미지 api는 50페이지까지 요청가능, 비디오 api는 15페이지까지 요청가능 -> pageNum 가 16이상이라면 이미지 api만 호출.
+
             if (pageNum < 16) {
                 val responseImages = apiServices.searchImages(query, pageNum, PAGE_SIZE)
                 val responseVideos = apiServices.searchVideos(query, pageNum, PAGE_SIZE)
