@@ -1,6 +1,7 @@
 package com.bank.photofinder.ui.home
 
 import ANIMATION_DURATION
+import BACK_DELAY
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
@@ -105,7 +106,7 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>() {
 
     override fun onBackPressed() {
         if (mViewBinding.pager.currentItem == 0) {
-            if (System.currentTimeMillis() - backWait >= 2000) {
+            if (System.currentTimeMillis() - backWait >= BACK_DELAY) {
                 backWait = System.currentTimeMillis()
                 Snackbar.make(
                     mViewBinding.contentsLayout,
