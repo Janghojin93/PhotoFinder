@@ -24,7 +24,6 @@ object CommonBindingAdapter {
                     .error(R.drawable.img_default)
                     .centerCrop()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-
             )
             .into(view)
     }

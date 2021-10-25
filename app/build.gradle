@@ -101,6 +101,8 @@ dependencies {
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:$roomVersion"
 
+    //버튼 애니메이션 라이브러리
+    implementation 'com.daimajia.androidanimations:library:2.4@aar'
 
 
 }

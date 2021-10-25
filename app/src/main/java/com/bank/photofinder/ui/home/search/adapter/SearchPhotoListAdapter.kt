@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bank.photofinder.databinding.ListItemSearchPhotoBinding
 import com.bank.photofinder.model.Photo
 import com.bank.photofinder.utils.onThrottleClick
+import com.daimajia.androidanimations.library.Techniques
+import com.daimajia.androidanimations.library.YoYo
 
 
 class SearchPhotoListAdapter(private val listener: OnItemClickListener) :
@@ -37,6 +39,10 @@ class SearchPhotoListAdapter(private val listener: OnItemClickListener) :
 
         init {
             binding.imageSaveButton.onThrottleClick {
+
+                //버튼 애니메이션
+                YoYo.with(Techniques.Pulse).duration(300).repeat(0).playOn(binding.imageSaveButton)
+
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     getItem(position)?.let { item -> listener.onItemSaveClick(item) }

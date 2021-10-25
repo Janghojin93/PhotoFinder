@@ -1,14 +1,13 @@
 package com.bank.photofinder.ui.home.search
 
 import SEARCH_DELAY
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bank.photofinder.R
 import com.bank.photofinder.databinding.FragmentSearchPhotoBinding
 import com.bank.photofinder.extensions.hideKeyboard
@@ -17,7 +16,10 @@ import com.bank.photofinder.ui.base.BaseFragment
 import com.bank.photofinder.ui.home.HomeViewModel
 import com.bank.photofinder.ui.home.search.adapter.SearchPhotoListAdapter
 import com.bank.photofinder.utils.hide
+import com.bank.photofinder.utils.onThrottleClick
 import com.bank.photofinder.utils.show
+import com.daimajia.androidanimations.library.Techniques
+import com.daimajia.androidanimations.library.YoYo
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -59,12 +61,15 @@ class SearchPhotoFragment :
                     }
                 }
             }
+            moveTopFloatingButton.onThrottleClick {
+                photoListRecyclerView.smoothScrollToPosition(0)
+            }
         }
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     private fun setupRecyclerView() {
         mViewBinding.apply {
+
             photoListRecyclerView.layoutManager = GridLayoutManager(activity, 3)
             // StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
             photoListRecyclerView.setHasFixedSize(true)
@@ -82,7 +87,6 @@ class SearchPhotoFragment :
             mViewBinding.apply {
 
                 photoProgressBar.isVisible = loadState.source.refresh is LoadState.Loading
-                photoListRecyclerView.isVisible = loadState.source.refresh is LoadState.NotLoading
                 errorTextview.isVisible = loadState.source.refresh is LoadState.Error
 
                 //데이터가 없을때
@@ -90,10 +94,27 @@ class SearchPhotoFragment :
                     photoListRecyclerView.hide()
                     emptyTextview.show()
                 } else {
+                    photoListRecyclerView.show()
                     emptyTextview.hide()
                 }
             }
         }
+
+        mViewBinding.photoListRecyclerView.addOnScrollListener(object :
+            RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val lastVisibleItem =
+                    (mViewBinding.photoListRecyclerView.layoutManager as GridLayoutManager).findLastCompletelyVisibleItemPosition()
+
+                if (lastVisibleItem >= 30) {
+                    mViewBinding.moveTopFloatingButton.show()
+                } else {
+                    mViewBinding.moveTopFloatingButton.hide()
+                }
+
+            }
+        })
     }
 
     private fun setupObserver() {
@@ -111,6 +132,8 @@ class SearchPhotoFragment :
 
     //좋아요 버튼 클릭 이벤트 처리
     override fun onItemSaveClick(photo: Photo) {
+
+
         mSearchPhotoViewModel.run {
             if (savePhotoList.value.isNullOrEmpty()) {
                 onClickSavePhoto(photo)

@@ -21,8 +21,7 @@ class PhotoPagingSource(private val apiServices: ApiServices, private val query:
 
         return try {
 
-            Log.d(TAG, "pageNum:$pageNum")
-
+            //Log.d(TAG, "pageNum:$pageNum")
 
             val photoList = mutableListOf<Photo>()
             //이미지 api는 50페이지까지 요청가능, 비디오 api는 15페이지까지 요청가능 -> pageNum 가 16이상이라면 이미지 api만 호출.
@@ -30,6 +29,11 @@ class PhotoPagingSource(private val apiServices: ApiServices, private val query:
             if (pageNum < 16) {
                 val responseImages = apiServices.searchImages(query, pageNum, PAGE_SIZE)
                 val responseVideos = apiServices.searchVideos(query, pageNum, PAGE_SIZE)
+
+                //Log.d(TAG, "responseImages:$responseImages")
+                //Log.d(TAG, "responseVideos:$responseVideos")
+
+
                 val imageList = responseImages.body()?.documents ?: emptyList()
                 val videoList = responseVideos.body()?.documents ?: emptyList()
 
@@ -64,6 +68,8 @@ class PhotoPagingSource(private val apiServices: ApiServices, private val query:
             } else {
 
                 val responseImages = apiServices.searchImages(query, pageNum, PAGE_SIZE)
+
+                //Log.d(TAG, "responseImages:$responseImages")
 
                 //통신체크
                 if (responseImages.code() != 200) throw HttpException(responseImages)

@@ -14,11 +14,6 @@ fun View.hide() {
     visibility = View.GONE
 }
 
-fun Activity.showToast(message: String, duration: Int = Toast.LENGTH_SHORT) {
-    Toast.makeText(applicationContext, message, duration).show()
-}
-
-
 fun Activity.getColorRes(@ColorRes id: Int) = ContextCompat.getColor(applicationContext, id)
 
 fun View.onThrottleClick(action: (v: View) -> Unit) {
