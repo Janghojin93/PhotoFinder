@@ -3,14 +3,12 @@ package com.bank.photofinder.ui.home.search
 import SEARCH_DELAY
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bank.photofinder.R
 import com.bank.photofinder.databinding.FragmentSearchPhotoBinding
 import com.bank.photofinder.extensions.hideKeyboard
@@ -114,6 +112,7 @@ class SearchPhotoFragment :
 
     }
 
+
     //좋아요 버튼 클릭 이벤트 처리
     override fun onItemSaveClick(photo: Photo) {
         mSearchPhotoViewModel.run {
@@ -121,8 +120,7 @@ class SearchPhotoFragment :
                 onClickSaveImage(photo)
                 Toast.makeText(activity, R.string.save_success, Toast.LENGTH_SHORT).show();
             } else {
-
-                if (containCheck(photo, savePhotoList.value!!)) {
+                if (containsCheck(photo, savePhotoList.value!!)) {
                     Toast.makeText(activity, R.string.save_fail, Toast.LENGTH_SHORT).show();
                 } else {
                     onClickSaveImage(photo)
@@ -133,8 +131,8 @@ class SearchPhotoFragment :
     }
 
     //이미 저장된 이미지인지 아닌지 체크
-    private fun containCheck(photo: Photo, photoList: List<Photo>): Boolean {
-        var isContain = true
+    private fun containsCheck(photo: Photo, photoList: List<Photo>): Boolean {
+        var isContains = true
 
         for (i in photoList.indices) {
             if (photoList[i].thumbnail_url == photo.thumbnail_url) {
@@ -142,10 +140,10 @@ class SearchPhotoFragment :
                 break
             }
             if (i == photoList.size - 1) {
-                isContain = false
+                isContains = false
                 Toast.makeText(activity, R.string.save_success, Toast.LENGTH_SHORT).show();
             }
         }
-        return isContain
+        return isContains
     }
 }
