@@ -60,7 +60,6 @@ class SavePhotoListFragment :
         mViewBinding.apply {
             photoSaveListRecyclerView.layoutManager = GridLayoutManager(activity, 2)
             photoSaveListRecyclerView.setHasFixedSize(true)
-            photoSaveListRecyclerView.itemAnimator = null
             photoSaveListRecyclerView.adapter = adapter
         }
     }

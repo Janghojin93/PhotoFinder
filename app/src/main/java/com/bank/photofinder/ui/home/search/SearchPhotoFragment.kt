@@ -73,6 +73,7 @@ class SearchPhotoFragment :
             photoListRecyclerView.layoutManager = GridLayoutManager(activity, 3)
             // StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
             photoListRecyclerView.setHasFixedSize(true)
+            photoListRecyclerView.itemAnimator = null
             photoListRecyclerView.adapter = adapter
             photoListRecyclerView.apply {
                 setOnTouchListener { _, _ ->
@@ -87,6 +88,7 @@ class SearchPhotoFragment :
             mViewBinding.apply {
 
                 photoProgressBar.isVisible = loadState.source.refresh is LoadState.Loading
+                photoListRecyclerView.isVisible = loadState.source.refresh is LoadState.NotLoading
                 errorTextview.isVisible = loadState.source.refresh is LoadState.Error
 
                 //데이터가 없을때
@@ -94,7 +96,6 @@ class SearchPhotoFragment :
                     photoListRecyclerView.hide()
                     emptyTextview.show()
                 } else {
-                    photoListRecyclerView.show()
                     emptyTextview.hide()
                 }
             }
